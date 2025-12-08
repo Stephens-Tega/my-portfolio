@@ -1,4 +1,5 @@
 import Link from 'next/link';  
+
 export default function Home() {
   return (
     <main className="min-h-screen bg-gray-50">
@@ -27,7 +28,7 @@ export default function Home() {
       </nav>
 
       {/* Hero */}
-      <section className="pt-20 pb-20 bg-gradient-to-r from-blue-600 to-indigo-700 text-white">  {/* Fixed: bg-gradient-to-r */}
+      <section className="pt-20 pb-20 bg-linear-to-r from-blue-600 to-indigo-700 text-white">  {/* Fixed: bg-gradient-to-r */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-5xl md:text-6xl font-bold mb-4">
             Hi, I'm <span className="text-yellow-300">Tega Stephens</span>
