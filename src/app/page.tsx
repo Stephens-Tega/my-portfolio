@@ -176,7 +176,7 @@ export default function Home() {
                   Email
                 </a>
                 <a 
-                  href="https://linkedin.com/in/tega-stephens" 
+                  href="https://linkedin.com/in/tega-stephens-03170a291" 
                   className="text-blue-400 hover:underline"
                   target="_blank" 
                   rel="noopener noreferrer"
