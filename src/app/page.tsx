@@ -1,28 +1,93 @@
-import Link from 'next/link';  
+"use client";
+
+import Link from 'next/link'; 
+import { useState } from 'react'; 
 
 export default function Home() {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
     <main className="min-h-screen bg-gray-50">
       {/* Navbar */}
-      <nav className="bg-white shadow-lg fixed w-full z-50">
+      <nav className="bg-white shadow-lg fixed top-0 left-0 right-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16">
+            {/* Logo / Name */}
             <div className="flex items-center">
-              <Link href="/" className="text-xl font-bold text-gray-900">
+              <Link href="/" className="text-2xl font-bold text-gray-900">
                 Tega Stephens
               </Link>
             </div>
-            <div className="flex items-center space-x-8">
-              <Link href="#about" className="text-gray-700 hover:text-gray-900">
+
+            {/* Desktop Menu */}
+            <div className="hidden md:flex items-center space-x-8">
+              <Link href="#about" className="text-gray-700 hover:text-indigo-600 transition">
                 About
               </Link>
-              <Link href="#skills" className="text-gray-700 hover:text-gray-900">
+              <Link href="#skills" className="text-gray-700 hover:text-indigo-600 transition">
                 Skills
               </Link>
-              <Link href="#contact" className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700">
+              <Link
+                href="#contact"
+                className="bg-indigo-600 text-white px-6 py-2 rounded-full hover:bg-indigo-700 transition"
+              >
                 Contact
               </Link>
             </div>
+
+            {/* Mobile Hamburger Button */}
+            <div className="md:hidden flex items-center">
+              <button
+                onClick={() => setIsOpen(!isOpen)}
+                className="text-gray-700 focus:outline-none"
+                aria-label="Toggle menu"
+              >
+                <svg className="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  {isOpen ? (
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  ) : (
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M4 6h16M4 12h16M4 18h16"
+                    />
+                  )}
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Mobile Menu - Slides Down */}
+        <div className={`${isOpen ? 'block' : 'hidden'} md:hidden bg-white border-t`}>
+          <div className="px-2 pt-2 pb-4 space-y-1">
+            <Link
+              href="#about"
+              onClick={() => setIsOpen(false)}
+              className="block px-4 py-3 text-gray-700 hover:bg-indigo-50 rounded-lg text-center"
+            >
+              About
+            </Link>
+            <Link
+              href="#skills"
+              onClick={() => setIsOpen(false)}
+              className="block px-4 py-3 text-gray-700 hover:bg-indigo-50 rounded-lg text-center"
+            >
+              Skills
+            </Link>
+            <Link
+              href="#contact"
+              onClick={() => setIsOpen(false)}
+              className="block px-4 py-3 bg-indigo-600 text-white rounded-full mx-8 hover:bg-indigo-700 text-center font-medium"
+            >
+              Contact
+            </Link>
           </div>
         </div>
       </nav>
