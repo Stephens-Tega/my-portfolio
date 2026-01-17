@@ -22,6 +22,11 @@ export default function ThemeToggle() {
   useEffect(() => {
     if (!theme) return;
     try { localStorage.setItem('theme', theme); } catch (e) {}
+    // Apply theme change to document root so toggling takes effect
+    try {
+      const root = document.documentElement;
+      if (theme === 'dark') root.classList.add('dark'); else root.classList.remove('dark');
+    } catch (e) {}
   }, [theme]);
 
   // Render a consistent icon during SSR and initial hydration (treat null as light)

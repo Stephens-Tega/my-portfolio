@@ -3,6 +3,7 @@
 import Link from 'next/link'; 
 import { useState } from 'react'; 
 import ThemeToggle from '../components/ThemeToggle';
+import ContactForm from '../components/ContactForm';
 
 export default function Home() {
   const [isOpen, setIsOpen] = useState(false);
@@ -15,15 +16,17 @@ export default function Home() {
           <div className="flex items-center h-16">
             {/* Logo */}
             <div className="flex items-center">
-              <Link href="/" className="text-2xl font-bold text-gray-900 dark:text-white flex items-center">
-              <span className="hidden md:inline-flex items-center bg-gradient-to-r from-indigo-50 to-white border border-gray-200 px-2 py-1 rounded font-mono text-sm text-indigo-700">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden>
-                    <path d="M6.5 7.5L3 10l3.5 2.5V7.5zM13.5 7.5v5L17 10l-3.5-2.5zM9 6h2v8H9V6z" />
-                  </svg>
+              <Link href="/" className="text-2xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
+                {/* Icon - visible on all devices, size responsive */}
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 md:h-4 md:w-4 text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden>
+                  <path d="M6.5 7.5L3 10l3.5 2.5V7.5zM13.5 7.5v5L17 10l-3.5-2.5zM9 6h2v8H9V6z" />
+                </svg>
+                {/* Full badge - hidden on mobile, visible on md+ */}
+                <span className="hidden md:inline-flex items-center bg-gradient-to-r from-indigo-50 to-white border border-gray-200 px-2 py-1 rounded font-mono text-sm text-indigo-700">
                   <span className="ml-2 text-xs">dev</span>
                 </span>
-                &nbsp;
-                Tega Stephens
+                {/* Name - always visible */}
+                <span className="text-xl md:text-2xl">Tega Stephens</span>
               </Link>
             </div>
 
@@ -42,6 +45,12 @@ export default function Home() {
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 20l9-5-9-5-9 5 9 5z" />
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 12l9-5-9-5-9 5 9 5z" opacity="0.5" />
+                </svg>
+              </Link>
+
+              <Link href="#contact-form" aria-label="Contact Form" className="text-gray-700 dark:text-gray-200 hover:text-indigo-600 transition">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8m0 8a2 2 0 01-2 2H5a2 2 0 01-2-2V8" />
                 </svg>
               </Link>
 
@@ -114,6 +123,16 @@ export default function Home() {
               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 20l9-5-9-5-9 5 9 5z" />
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 12l9-5-9-5-9 5 9 5z" opacity="0.5" />
+              </svg>
+            </Link>
+            <Link
+              href="#contact-form"
+              onClick={() => setIsOpen(false)}
+              aria-label="Contact Form"
+              className="block px-4 py-3 text-gray-700 dark:text-gray-200 hover:bg-indigo-50 dark:hover:bg-indigo-900 rounded-lg text-center"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8m0 8a2 2 0 01-2 2H5a2 2 0 01-2-2V8" />
               </svg>
             </Link>
             <a
@@ -368,6 +387,17 @@ export default function Home() {
               <p className="text-gray-600 dark:text-gray-300">Designing intuitive interfaces and polished user journeys using Figma and design-first development.</p>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Contact Form Section */}
+      <section id="contact-form" className="py-20 bg-white dark:bg-gray-800 transition-colors">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl font-bold text-center mb-4 text-gray-900 dark:text-white">Get In Touch</h2>
+          <p className="text-center text-gray-600 dark:text-gray-300 max-w-2xl mx-auto mb-12">
+            Have a project in mind? Let's collaborate! Fill out the form below or connect with me directly.
+          </p>
+          <ContactForm />
         </div>
       </section>
 
