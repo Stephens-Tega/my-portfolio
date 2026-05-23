@@ -1,168 +1,141 @@
 "use client";
 
-import { FormEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, useState } from "react";
+
+type FormData = {
+  name: string;
+  email: string;
+  message: string;
+};
+
+const initialFormData: FormData = {
+  name: "",
+  email: "",
+  message: "",
+};
 
 export default function ContactForm() {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: '',
-  });
+  const [formData, setFormData] = useState<FormData>(initialFormData);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitMessage, setSubmitMessage] = useState('');
-  const [submitError, setSubmitError] = useState('');
+  const [submitMessage, setSubmitMessage] = useState("");
+  const [submitError, setSubmitError] = useState("");
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
+  const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = event.target;
+    setFormData((prev) => ({
       ...prev,
       [name]: value,
     }));
   };
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     setIsSubmitting(true);
-    setSubmitMessage('');
-    setSubmitError('');
+    setSubmitMessage("");
+    setSubmitError("");
 
     try {
-      // Using FormSubmit service (free, no backend needed)
-      const response = await fetch('https://formsubmit.co/tfstephens2005@gmail.com', {
-        method: 'POST',
+      const response = await fetch("https://formsubmit.co/tfstephens2005@gmail.com", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          message: formData.message,
-        }),
+        body: JSON.stringify(formData),
       });
 
       if (response.ok) {
-        setSubmitMessage('✅ Message sent successfully! I\'ll get back to you soon.');
-        setFormData({ name: '', email: '', message: '' });
-        setTimeout(() => setSubmitMessage(''), 5000);
+        setSubmitMessage("Message sent successfully. I will get back to you soon.");
+        setFormData(initialFormData);
+        window.setTimeout(() => setSubmitMessage(""), 5000);
       } else {
-        setSubmitError('Failed to send message. Please try again.');
+        setSubmitError("Failed to send message. Please try again.");
       }
     } catch (error) {
-      console.error('Error submitting form:', error);
-      setSubmitError('Error sending message. Please try emailing me directly.');
+      console.error("Error submitting form:", error);
+      setSubmitError("Error sending message. Please try emailing me directly.");
     } finally {
       setIsSubmitting(false);
     }
   };
 
   return (
-    <div className="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-md transition-colors border border-gray-200 dark:border-gray-700 max-w-2xl mx-auto">
-      <h3 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">Send Me a Message</h3>
-      
-      <form onSubmit={handleSubmit} className="space-y-4">
-        {/* Name Field */}
+    <div className="kinetic-card glass-panel-strong rounded-lg p-5 sm:p-7">
+      <div className="mb-7 flex flex-col gap-3 border-b border-(--line) pb-6 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-            Your Name
+          <p className="font-mono text-xs text-(--muted-fg)">DIRECT BRIEF</p>
+          <h3 className="mt-2 text-2xl font-semibold text-(--page-fg)">Send the idea</h3>
+        </div>
+        <p className="max-w-xs text-sm leading-6 text-(--muted-fg)">
+          Tell me what you are building, where it is stuck, or what needs to feel sharper.
+        </p>
+      </div>
+
+      <form onSubmit={handleSubmit} className="space-y-5">
+        <div className="grid gap-5 sm:grid-cols-2">
+          <label className="group block">
+            <span className="mb-2 block text-sm font-medium text-(--page-fg)">Name</span>
+            <input
+              type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              required
+              className="w-full rounded-lg border border-(--line) bg-white/70 px-4 py-3 text-(--page-fg) outline-none transition placeholder:text-(--muted-fg) focus:border-[#0f8f83] focus:ring-4 focus:ring-[#0f8f83]/15 dark:bg-white/4 dark:focus:border-[#3fd4c5]"
+              placeholder="Your name"
+            />
           </label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            required
-            className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-600 transition"
-            placeholder="John Doe"
-          />
+
+          <label className="group block">
+            <span className="mb-2 block text-sm font-medium text-(--page-fg)">Email</span>
+            <input
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+              className="w-full rounded-lg border border-(--line) bg-white/70 px-4 py-3 text-(--page-fg) outline-none transition placeholder:text-(--muted-fg) focus:border-[#0f8f83] focus:ring-4 focus:ring-[#0f8f83]/15 dark:bg-white/4 dark:focus:border-[#3fd4c5]"
+              placeholder="you@example.com"
+            />
+          </label>
         </div>
 
-        {/* Email Field */}
-        <div>
-          <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-            Your Email
-          </label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-            className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-600 transition"
-            placeholder="your.email@example.com"
-          />
-        </div>
-
-        {/* Message Field */}
-        <div>
-          <label htmlFor="message" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-            Message
-          </label>
+        <label className="block">
+          <span className="mb-2 block text-sm font-medium text-(--page-fg)">Message</span>
           <textarea
-            id="message"
             name="message"
             value={formData.message}
             onChange={handleChange}
             required
-            rows={5}
-            className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-600 transition resize-none"
-            placeholder="Tell me about your project or just say hi!"
+            rows={6}
+            className="w-full resize-none rounded-lg border border-(--line) bg-white/70 px-4 py-3 text-(--page-fg) outline-none transition placeholder:text-(--muted-fg) focus:border-[#0f8f83] focus:ring-4 focus:ring-[#0f8f83]/15 dark:bg-white/4 dark:focus:border-[#3fd4c5]"
+            placeholder="What are we making premium?"
           />
-        </div>
+        </label>
 
-        {/* Error and Success Messages */}
         {submitMessage && (
-          <div className="p-3 bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 rounded-lg text-sm">
+          <div className="rounded-lg border border-[#0f8f83]/30 bg-[#0f8f83]/10 p-3 text-sm text-[#09675f] dark:text-[#7ee7dd]">
             {submitMessage}
           </div>
         )}
+
         {submitError && (
-          <div className="p-3 bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-300 rounded-lg text-sm">
+          <div className="rounded-lg border border-[#b6345f]/30 bg-[#b6345f]/10 p-3 text-sm text-[#8b2144] dark:text-[#ff9fbb]">
             {submitError}
           </div>
         )}
 
-        {/* Submit Button */}
         <button
           type="submit"
           disabled={isSubmitting}
-          className="w-full bg-indigo-600 text-white py-2 rounded-lg font-semibold hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed transition"
+          className="kinetic-card inline-flex w-full items-center justify-center gap-2 rounded-lg bg-[#15110d] px-5 py-4 text-sm font-semibold text-[#f6efe4] transition hover:-translate-y-0.5 hover:bg-[#0f8f83] disabled:cursor-not-allowed disabled:opacity-55 dark:bg-[#f6efe4] dark:text-[#15110d] dark:hover:bg-[#3fd4c5]"
         >
-          {isSubmitting ? 'Sending...' : 'Send Message'}
+          {isSubmitting ? "Sending..." : "Send message"}
+          <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+            <path d="M5 12h14" strokeLinecap="round" />
+            <path d="m13 6 6 6-6 6" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
         </button>
       </form>
-
-      {/* Social Links */}
-      <div className="mt-8 pt-8 border-t border-gray-200 dark:border-gray-700">
-        <p className="text-center text-gray-600 dark:text-gray-300 mb-4">Or connect with me on:</p>
-        <div className="flex justify-center gap-6">
-          <a
-            href="https://linkedin.com/in/tega-stephens-03170a291"
-            aria-label="LinkedIn"
-            className="inline-flex items-center gap-2 text-indigo-600 hover:text-indigo-700 dark:text-indigo-400 dark:hover:text-indigo-300 font-medium transition"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-9h3v9zm-1.5-10.268c-.966 0-1.75-.8-1.75-1.782 0-.982.784-1.781 1.75-1.781s1.75.799 1.75 1.781c0 .982-.784 1.782-1.75 1.782zm13.5 10.268h-3v-4.75c0-1.133-.406-1.906-1.422-1.906-.776 0-1.238.523-1.44 1.028-.074.18-.092.43-.092.68v4.948h-3s.039-8.02 0-9h3v1.275c.397-.612 1.106-1.483 2.69-1.483 1.964 0 3.441 1.283 3.441 4.038v5.17z"/>
-            </svg>
-            LinkedIn
-          </a>
-          <a
-            href="https://github.com/Stephens-Tega"
-            aria-label="GitHub"
-            className="inline-flex items-center gap-2 text-indigo-600 hover:text-indigo-700 dark:text-indigo-400 dark:hover:text-indigo-300 font-medium transition"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 .5C5.73.5.5 5.73.5 12c0 5.08 3.29 9.38 7.86 10.9.58.11.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.7-3.88-1.54-3.88-1.54-.53-1.36-1.3-1.72-1.3-1.72-1.06-.72.08-.71.08-.71 1.17.08 1.79 1.2 1.79 1.2 1.04 1.78 2.73 1.27 3.4.97.11-.75.41-1.27.75-1.56-2.56-.29-5.26-1.28-5.26-5.7 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.47.11-3.06 0 0 .97-.31 3.18 1.18a11.07 11.07 0 012.9-.39c.98 0 1.96.13 2.88.39 2.2-1.49 3.16-1.18 3.16-1.18.63 1.59.24 2.77.12 3.06.74.81 1.19 1.83 1.19 3.09 0 4.43-2.71 5.4-5.29 5.69.42.36.8 1.08.8 2.18 0 1.58-.01 2.85-.01 3.24 0 .31.21.68.8.56C20.21 21.38 23.5 17.08 23.5 12 23.5 5.73 18.27.5 12 .5z"/>
-            </svg>
-            GitHub
-          </a>
-        </div>
-      </div>
     </div>
   );
 }

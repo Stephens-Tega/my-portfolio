@@ -1,449 +1,418 @@
-"use client";
+import Link from "next/link";
+import ContactForm from "@/components/ContactForm";
+import SideDrawer from "@/components/SideDrawer";
+import ThemeToggle from "@/components/ThemeToggle";
 
-import Link from 'next/link'; 
-import { useState } from 'react'; 
-import ThemeToggle from '../components/ThemeToggle';
-import ContactForm from '../components/ContactForm';
+const whatsappHref =
+  "https://wa.me/2349123442788?text=Hello%20I%20am%20interested%20in%20your%20services";
+
+const navLinks = [
+  { href: "#about", label: "About", kicker: "Origin" },
+  { href: "#skills", label: "Stack", kicker: "Tools" },
+  { href: "#services", label: "Services", kicker: "Offer" },
+  { href: "#contact-form", label: "Contact", kicker: "Brief" },
+];
+
+const metrics = [
+  { value: "3+", label: "Years building" },
+  { value: "Full", label: "Stack delivery" },
+  { value: "Lagos", label: "Nigeria" },
+];
+
+const skillGroups = [
+  {
+    title: "Languages",
+    tone: "text-[#e1a15f]",
+    skills: ["HTML", "CSS", "JavaScript", "TypeScript"],
+  },
+  {
+    title: "Frameworks",
+    tone: "text-[#3fd4c5]",
+    skills: ["React", "Next.js", "Tailwind CSS", "React Native"],
+  },
+  {
+    title: "Tools",
+    tone: "text-[#e1698f]",
+    skills: ["Figma", "Git / GitHub", "npm", "Vercel"],
+  },
+  {
+    title: "Databases",
+    tone: "text-[#77d18c]",
+    skills: ["MongoDB", "PostgreSQL"],
+  },
+];
+
+const services = [
+  {
+    title: "Web Development",
+    description:
+      "Responsive websites with React and Next.js, focused on performance, clarity, and a polished user journey.",
+  },
+  {
+    title: "Custom Solutions",
+    description:
+      "Tailor-made web apps and integrations that solve business needs and make workflows feel lighter.",
+  },
+  {
+    title: "UI/UX Design",
+    description:
+      "Intuitive interfaces and premium product flows shaped in Figma and carried through to the final build.",
+  },
+];
+
+const socials = [
+  { label: "Email", href: "mailto:tfstephens2005@gmail.com" },
+  { label: "LinkedIn", href: "https://linkedin.com/in/tega-stephens-03170a291" },
+  { label: "GitHub", href: "https://github.com/Stephens-Tega" },
+];
+
+const footerMeta = ["Lagos, Nigeria", "Full-stack developer", "Next.js 16"];
+
+function ArrowIcon() {
+  return (
+    <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+      <path d="M5 12h14" strokeLinecap="round" />
+      <path d="m13 6 6 6-6 6" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+function CodeIcon() {
+  return (
+    <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
+      <path d="m8 9-4 3 4 3" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="m16 9 4 3-4 3" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="m14 5-4 14" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function HeroVisual() {
+  return (
+    <div className="relative mx-auto min-w-0 w-full max-w-[520px] reveal-up reveal-up-delay-2 lg:mx-0">
+      <div className="hero-grid soft-pulse glass-panel-strong relative min-h-[480px] min-w-0 overflow-hidden rounded-lg p-4 sm:min-h-[520px] sm:p-5">
+        <div className="scan-line pointer-events-none absolute left-0 top-0 h-24 w-full bg-linear-to-b from-[#3fd4c5]/0 via-[#3fd4c5]/14 to-[#3fd4c5]/0" />
+        <div className="flex items-center justify-between border-b border-(--line) pb-4">
+          <div className="flex items-center gap-2">
+            <span className="h-3 w-3 rounded-full bg-[#e1698f]" />
+            <span className="h-3 w-3 rounded-full bg-[#e1a15f]" />
+            <span className="h-3 w-3 rounded-full bg-[#3fd4c5]" />
+          </div>
+          <span className="font-mono text-xs text-(--muted-fg)">portfolio.kernel</span>
+        </div>
+
+          <div className="mt-5 grid gap-4">
+          <div className="kinetic-card interface-card rounded-lg border border-(--line) bg-[#070706]/80 p-4 text-[#f6efe4] shadow-2xl dark:bg-[#070706]/80">
+            <div className="flex items-center justify-between">
+              <p className="font-mono text-xs text-[#a9fff5]">LIVE SYSTEM</p>
+              <span className="rounded-full border border-[#3fd4c5]/35 px-3 py-1 text-xs text-[#a9fff5]">Available</span>
+            </div>
+            <div className="mt-5 grid grid-cols-[1fr_auto] gap-4">
+              <div>
+                <p className="text-3xl font-semibold">Premium web experiences</p>
+                <p className="mt-3 text-sm leading-6 text-[#c6bcb0]">
+                  Interfaces that feel fast, intentional, and built for real users.
+                </p>
+              </div>
+              <div className="flex h-20 w-20 items-center justify-center rounded-lg border border-[#3fd4c5]/25 bg-[#3fd4c5]/10">
+                <CodeIcon />
+              </div>
+            </div>
+          </div>
+
+          <div className="grid gap-4 sm:grid-cols-2">
+            <div className="kinetic-card interface-card rounded-lg border border-(--line) bg-white/78 p-4 dark:bg-white/6">
+              <p className="font-mono text-xs text-(--muted-fg)">STACK</p>
+              <div className="mt-4 space-y-3">
+                {["React", "Next.js", "TypeScript"].map((item) => (
+                  <div key={item} className="flex items-center justify-between gap-3">
+                    <span className="text-sm text-(--page-fg)">{item}</span>
+                    <span className="h-2 w-24 rounded-full bg-[#3fd4c5]/20">
+                      <span className="block h-2 rounded-full bg-[#3fd4c5]" style={{ width: item === "React" ? "92%" : item === "Next.js" ? "88%" : "82%" }} />
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="kinetic-card interface-card rounded-lg border border-(--line) bg-white/78 p-4 dark:bg-white/6">
+              <p className="font-mono text-xs text-(--muted-fg)">FOCUS</p>
+              <div className="mt-4 space-y-2 text-sm text-(--page-fg)">
+                <p>Performance first</p>
+                <p>Clean product flow</p>
+                <p>Scalable frontends</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="min-w-0 overflow-hidden rounded-lg border border-(--line) bg-[#15110d] py-3 text-[#f6efe4]">
+            <div className="ticker-track flex w-max gap-8 whitespace-nowrap font-mono text-xs">
+              {Array.from({ length: 2 }).map((_, index) => (
+                <div key={index} className="flex gap-8">
+                  <span>React Native</span>
+                  <span>MongoDB</span>
+                  <span>PostgreSQL</span>
+                  <span>Figma</span>
+                  <span>Vercel</span>
+                  <span>Tailwind CSS</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function SectionHeader({
+  eyebrow,
+  title,
+  children,
+}: {
+  eyebrow: string;
+  title: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="mx-auto mb-12 max-w-3xl text-center reveal-up">
+      <p className="font-mono text-xs text-(--accent)">{eyebrow}</p>
+      <h2 className="mt-3 text-3xl font-semibold text-(--page-fg) sm:text-4xl">{title}</h2>
+      <p className="mt-4 text-base leading-8 text-(--muted-fg)">{children}</p>
+    </div>
+  );
+}
 
 export default function Home() {
-  const [isOpen, setIsOpen] = useState(false);
-
   return (
-    <main className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors">
-      {/* Navbar */}
-      <nav className="bg-white dark:bg-gray-800 shadow-lg fixed top-0 left-0 right-0 z-50 transition-colors">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center h-16">
-            {/* Logo */}
-            <div className="flex items-center">
-              <Link href="/" className="text-2xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
-                {/* Icon - visible on all devices, size responsive */}
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 md:h-4 md:w-4 text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden>
-                  <path d="M6.5 7.5L3 10l3.5 2.5V7.5zM13.5 7.5v5L17 10l-3.5-2.5zM9 6h2v8H9V6z" />
-                </svg>
-                {/* Full badge - hidden on mobile, visible on md+ */}
-                <span className="hidden md:inline-flex items-center bg-gradient-to-r from-indigo-50 to-white border border-gray-200 px-2 py-1 rounded font-mono text-sm text-indigo-700">
-                  <span className="ml-2 text-xs">dev</span>
-                </span>
-                {/* Name - always visible */}
-                <span className="text-xl md:text-2xl">Tega Stephens</span>
-              </Link>
-            </div>
+    <main className="premium-shell min-h-screen text-(--page-fg)">
+      <header className="fixed left-0 right-0 top-0 z-50 border-b border-(--line) bg-[#f5f0e8]/80 backdrop-blur-xl dark:bg-[#080806]/78">
+        <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 pl-20 sm:px-6 sm:pl-20 md:pl-6 lg:px-8">
+          <Link href="/" className="group inline-flex min-w-0 items-center gap-3" aria-label="Tega Stephens home">
+            <span className="inline-flex h-11 w-11 items-center justify-center rounded-lg border border-(--line) bg-[#15110d] text-[#f6efe4] transition group-hover:-translate-y-0.5 dark:bg-[#f6efe4] dark:text-[#15110d]">
+              TS
+            </span>
+            <span className="leading-tight">
+              <span className="block truncate text-sm font-semibold text-(--page-fg)">Tega Stephens</span>
+              <span className="block truncate font-mono text-xs text-(--muted-fg)">full-stack developer</span>
+            </span>
+          </Link>
 
-            <div className="flex-1" />
-
-            {/* Desktop Menu */}
-            <div className="hidden md:flex items-center space-x-4">
-              <Link href="#about" aria-label="About" className="text-gray-700 dark:text-gray-200 hover:text-indigo-600 transition">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7a4 4 0 118 0v1a4 4 0 11-8 0V7z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 21v-2a4 4 0 014-4h10a4 4 0 014 4v2" />
-                </svg>
-              </Link>
-
-              <Link href="#skills" aria-label="Tech Stack" className="text-gray-700 dark:text-gray-200 hover:text-indigo-600 transition">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 20l9-5-9-5-9 5 9 5z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 12l9-5-9-5-9 5 9 5z" opacity="0.5" />
-                </svg>
-              </Link>
-
-              <Link href="#contact-form" aria-label="Contact Form" className="text-gray-700 dark:text-gray-200 hover:text-indigo-600 transition">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8m0 8a2 2 0 01-2 2H5a2 2 0 01-2-2V8" />
-                </svg>
-              </Link>
-
-              <a
-                href="https://wa.me/2349123442788?text=Hello%20I%20am%20interested%20in%20your%20services"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-indigo-600 text-white px-4 py-2 rounded-full hover:bg-indigo-700 transition inline-flex items-center"
+          <nav className="hidden items-center gap-1 md:flex" aria-label="Main navigation">
+            {navLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="rounded-lg px-4 py-2 text-sm text-(--muted-fg) transition hover:bg-black/4 hover:text-(--page-fg) dark:hover:bg-white/6"
               >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M20.52 3.48A11.88 11.88 0 0012 0C5.37 0 .02 5.35.02 12c0 2.11.55 4.18 1.6 6.01L0 24l6.19-1.6A11.94 11.94 0 0012 24c6.63 0 11.98-5.35 11.98-12 0-3.2-1.25-6.2-3.46-8.52zM12 21.5c-1.7 0-3.36-.44-4.81-1.27l-.34-.2-3.69.95.99-3.6-.22-.37A9.46 9.46 0 012.5 12c0-5.24 4.26-9.5 9.5-9.5S21.5 6.76 21.5 12 17.24 21.5 12 21.5z"/>
-                  <path d="M17.56 14.4c-.28-.14-1.66-.82-1.92-.92-.26-.1-.45-.14-.64.14s-.73.92-.9 1.11c-.16.2-.33.22-.61.08-.28-.14-1.18-.43-2.25-1.39-.83-.74-1.39-1.66-1.55-1.94-.16-.27-.02-.42.12-.56.12-.12.28-.32.42-.48.14-.16.18-.27.28-.46.1-.18.04-.34-.02-.48-.06-.14-.64-1.54-.88-2.1-.23-.55-.47-.48-.64-.49-.16-.01-.35-.01-.53-.01s-.48.07-.73.34c-.25.27-.95.93-.95 2.27s.97 2.63 1.1 2.81c.14.18 1.9 2.98 4.6 4.17 1.66.72 2.36.85 3.2.72.5-.07 1.66-.68 1.9-1.34.24-.66.24-1.23.17-1.34-.07-.11-.26-.18-.54-.32z"/>
-                </svg>
-                Contact
-              </a>
+                {link.label}
+              </Link>
+            ))}
+          </nav>
+
+          <div className="flex items-center gap-3">
+            <div className="hidden md:block">
               <ThemeToggle />
             </div>
-
-            
-
-            {/* Mobile Hamburger Button */}
-            <div className="md:hidden flex items-center">
-              <button
-                onClick={() => setIsOpen(!isOpen)}
-                className="text-gray-700 dark:text-gray-200 focus:outline-none"
-                aria-label="Toggle menu"
-              >
-                <svg className="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  {isOpen ? (
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M6 18L18 6M6 6l12 12"
-                    />
-                  ) : (
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M4 6h16M4 12h16M4 18h16"
-                    />
-                  )}
-                </svg>
-              </button>
-            </div>
-          </div>
-        </div>
-
-        {/* Mobile Menu - Slides Down */}
-        <div className={`${isOpen ? 'block' : 'hidden'} md:hidden bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700`}>
-          <div className="px-2 pt-2 pb-4 space-y-1">
-            <Link
-              href="#about"
-              onClick={() => setIsOpen(false)}
-              aria-label="About"
-              className="block px-4 py-3 text-gray-700 dark:text-gray-200 hover:bg-indigo-50 dark:hover:bg-indigo-900 rounded-lg text-center"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7a4 4 0 118 0v1a4 4 0 11-8 0V7z" />
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 21v-2a4 4 0 014-4h10a4 4 0 014 4v2" />
-              </svg>
-            </Link>
-            <Link
-              href="#skills"
-              onClick={() => setIsOpen(false)}
-              aria-label="Tech Stack"
-              className="block px-4 py-3 text-gray-700 dark:text-gray-200 hover:bg-indigo-50 dark:hover:bg-indigo-900 rounded-lg text-center"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 20l9-5-9-5-9 5 9 5z" />
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 12l9-5-9-5-9 5 9 5z" opacity="0.5" />
-              </svg>
-            </Link>
-            <Link
-              href="#contact-form"
-              onClick={() => setIsOpen(false)}
-              aria-label="Contact Form"
-              className="block px-4 py-3 text-gray-700 dark:text-gray-200 hover:bg-indigo-50 dark:hover:bg-indigo-900 rounded-lg text-center"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8m0 8a2 2 0 01-2 2H5a2 2 0 01-2-2V8" />
-              </svg>
-            </Link>
             <a
-              href="https://wa.me/2349123442788?text=Hello%20I%20am%20interested%20in%20your%20services"
-              onClick={() => setIsOpen(false)}
+              href={whatsappHref}
               target="_blank"
               rel="noopener noreferrer"
-              className="block px-4 py-3 bg-indigo-600 text-white rounded-full mx-8 hover:bg-indigo-700 text-center font-medium"
+              className="hidden items-center gap-2 rounded-lg bg-[#15110d] px-4 py-3 text-sm font-semibold text-[#f6efe4] transition hover:-translate-y-0.5 hover:bg-[#0f8f83] md:inline-flex dark:bg-[#f6efe4] dark:text-[#15110d] dark:hover:bg-[#3fd4c5]"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 inline-block mr-2" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M20.52 3.48A11.88 11.88 0 0012 0C5.37 0 .02 5.35.02 12c0 2.11.55 4.18 1.6 6.01L0 24l6.19-1.6A11.94 11.94 0 0012 24c6.63 0 11.98-5.35 11.98-12 0-3.2-1.25-6.2-3.46-8.52zM12 21.5c-1.7 0-3.36-.44-4.81-1.27l-.34-.2-3.69.95.99-3.6-.22-.37A9.46 9.46 0 012.5 12c0-5.24 4.26-9.5 9.5-9.5S21.5 6.76 21.5 12 17.24 21.5 12 21.5z"/>
-                <path d="M17.56 14.4c-.28-.14-1.66-.82-1.92-.92-.26-.1-.45-.14-.64.14s-.73.92-.9 1.11c-.16.2-.33.22-.61.08-.28-.14-1.18-.43-2.25-1.39-.83-.74-1.39-1.66-1.55-1.94-.16-.27-.02-.42.12-.56.12-.12.28-.32.42-.48.14-.16.18-.27.28-.46.1-.18.04-.34-.02-.48-.06-.14-.64-1.54-.88-2.1-.23-.55-.47-.48-.64-.49-.16-.01-.35-.01-.53-.01s-.48.07-.73.34c-.25.27-.95.93-.95 2.27s.97 2.63 1.1 2.81c.14.18 1.9 2.98 4.6 4.17 1.66.72 2.36.85 3.2.72.5-.07 1.66-.68 1.9-1.34.24-.66.24-1.23.17-1.34-.07-.11-.26-.18-.54-.32z"/>
-              </svg>
-              Contact
+              Start a project
+              <ArrowIcon />
             </a>
-              <div className="px-4 py-2 flex justify-center">
-                <ThemeToggle />
-              </div>
+            <SideDrawer links={navLinks} contactHref={whatsappHref} />
           </div>
         </div>
-      </nav>
+      </header>
 
-      {/* Hero */}
-      <section className="pt-20 pb-20 bg-gradient-to-r from-blue-600 to-indigo-700 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-5xl md:text-6xl font-bold mb-4">
-            Hi, I'm <span className="text-yellow-300">Tega Stephens</span>
-          </h1>
-          <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">
-            Full-Stack Developer crafting innovative web and mobile solutions with React, Next.js, and modern tools. Turning ideas into scalable, user-focused experiences.
-          </p>
-          <div className="space-x-4">
-            <Link href="#about" className="bg-white text-blue-600 px-6 py-3 rounded-md font-semibold hover:bg-gray-100 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700">
-              Learn More
-            </Link>
-            <Link
-              href="https://wa.me/2349123442788?text=Hello%20I%20am%20interested%20in%20your%20services"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center border-2 border-white text-white px-4 py-3 rounded-md font-semibold hover:bg-white hover:text-blue-600"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M20.52 3.48A11.88 11.88 0 0012 0C5.37 0 .02 5.35.02 12c0 2.11.55 4.18 1.6 6.01L0 24l6.19-1.6A11.94 11.94 0 0012 24c6.63 0 11.98-5.35 11.98-12 0-3.2-1.25-6.2-3.46-8.52zM12 21.5c-1.7 0-3.36-.44-4.81-1.27l-.34-.2-3.69.95.99-3.6-.22-.37A9.46 9.46 0 012.5 12c0-5.24 4.26-9.5 9.5-9.5S21.5 6.76 21.5 12 17.24 21.5 12 21.5z"/>
-                <path d="M17.56 14.4c-.28-.14-1.66-.82-1.92-.92-.26-.1-.45-.14-.64.14s-.73.92-.9 1.11c-.16.2-.33.22-.61.08-.28-.14-1.18-.43-2.25-1.39-.83-.74-1.39-1.66-1.55-1.94-.16-.27-.02-.42.12-.56.12-.12.28-.32.42-.48.14-.16.18-.27.28-.46.1-.18.04-.34-.02-.48-.06-.14-.64-1.54-.88-2.1-.23-.55-.47-.48-.64-.49-.16-.01-.35-.01-.53-.01s-.48.07-.73.34c-.25.27-.95.93-.95 2.27s.97 2.63 1.1 2.81c.14.18 1.9 2.98 4.6 4.17 1.66.72 2.36.85 3.2.72.5-.07 1.66-.68 1.9-1.34.24-.66.24-1.23.17-1.34-.07-.11-.26-.18-.54-.32z"/>
-              </svg>
-              Get In Touch
-            </Link>
+      <section className="hero-aurora relative overflow-hidden px-5 pb-20 pr-7 pt-32 sm:px-6 lg:px-8 lg:pb-24 lg:pt-36">
+        <div className="mx-auto grid max-w-7xl min-w-0 items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]">
+          <div className="hero-copy-safe mx-auto min-w-0 lg:mx-0">
+            <div className="reveal-up flex w-full max-w-full items-center gap-3 rounded-full border border-(--line) bg-white/60 px-4 py-2 text-sm text-(--muted-fg) dark:bg-white/4 sm:inline-flex sm:w-auto">
+              <span className="h-2 w-2 shrink-0 rounded-full bg-[#3fd4c5]" />
+              <span className="min-w-0 leading-6">Lagos based. Building for the web and mobile.</span>
+            </div>
+            <h1 className="reveal-up reveal-up-delay-1 mt-8 text-4xl font-semibold leading-[1.04] text-(--page-fg) sm:text-6xl lg:text-7xl">
+              Tega Stephens builds digital products with <span className="premium-gradient-text">premium feel.</span>
+            </h1>
+            <p className="reveal-up reveal-up-delay-2 mt-7 text-base leading-8 text-(--muted-fg) sm:max-w-2xl sm:text-xl">
+              Full-stack developer crafting innovative web and mobile solutions with React, Next.js, and modern tools.
+              I turn ideas into scalable, user-focused experiences.
+            </p>
+            <div className="reveal-up reveal-up-delay-3 mt-9 flex flex-col gap-3 sm:flex-row">
+              <a
+                href={whatsappHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="kinetic-card inline-flex items-center justify-center gap-2 rounded-lg bg-[#f6efe4] px-5 py-4 text-sm font-semibold text-[#15110d] shadow-xl shadow-black/20 transition hover:-translate-y-0.5 hover:bg-white dark:bg-[#f6efe4]"
+              >
+                Get in touch
+                <ArrowIcon />
+              </a>
+              <Link
+                href="#about"
+                className="kinetic-card inline-flex items-center justify-center gap-2 rounded-lg border border-(--line) bg-white/50 px-5 py-4 text-sm font-semibold text-(--page-fg) transition hover:-translate-y-0.5 hover:border-[#0f8f83]/60 dark:bg-white/4 dark:hover:border-[#3fd4c5]/70"
+              >
+                Explore the work
+                <ArrowIcon />
+              </Link>
+            </div>
+
+            <div className="reveal-up reveal-up-delay-3 mt-12 grid gap-3 sm:grid-cols-3">
+                {metrics.map((metric) => (
+                <div key={metric.label} className="kinetic-card glass-panel rounded-lg p-4">
+                  <p className="text-2xl font-semibold text-(--page-fg)">{metric.value}</p>
+                  <p className="mt-1 text-sm text-(--muted-fg)">{metric.label}</p>
+                </div>
+              ))}
+            </div>
           </div>
+
+          <HeroVisual />
         </div>
       </section>
 
-      {/* About */}
-      <section id="about" className="py-20 bg-white dark:bg-gray-800 transition-colors"> 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-center mb-12 text-gray-900 dark:text-white">About Me</h2>
-          <div className="grid md:grid-cols-2 gap-12 items-center"> 
-            <div>
-              <p className="text-lg text-gray-700 dark:text-gray-200 mb-6">
-                As a passionate full-stack developer with 3+ years of experience, I specialize in building dynamic, performant applications that solve real-world problems. From intuitive UIs to robust backends, I thrive on creating seamless experiences that users love.
+      <section id="about" className="section-rule px-4 py-20 sm:px-6 lg:px-8">
+        <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[0.75fr_1.25fr]">
+          <div className="reveal-up">
+            <p className="font-mono text-xs text-(--accent)">ABOUT</p>
+            <h2 className="mt-3 text-3xl font-semibold sm:text-4xl">A builder who cares about the feeling of the product.</h2>
+          </div>
+          <div className="kinetic-card glass-panel rounded-lg p-5 sm:p-7">
+            <div className="grid gap-6 text-base leading-8 text-(--muted-fg) md:grid-cols-2">
+              <p>
+                As a passionate full-stack developer with 3+ years of experience, I specialize in building dynamic,
+                performant applications that solve real-world problems. From intuitive UIs to robust backends, I thrive
+                on creating seamless experiences that users love.
               </p>
-              <p className="text-lg text-gray-700 dark:text-gray-200 mb-6">
-                My journey started with vanilla web tech and evolved into React ecosystems, where I've shipped mobile apps with React Native and full sites with Next.js. I'm all about clean code, scalability, and staying ahead of trends like TypeScript for type safety and MongoDB for flexible data handling.
+              <p>
+                My journey started with vanilla web tech and evolved into React ecosystems, where I have shipped mobile
+                apps with React Native and full sites with Next.js. I care about clean code, scalability, and staying
+                sharp with TypeScript and flexible data tools.
               </p>
-              <p className="text-lg text-gray-700 dark:text-gray-200">
-                When not coding, you'll find me exploring new tech stacks or contributing to open-source—always learning, always building.
+            </div>
+            <div className="mt-7 rounded-lg border border-(--line) bg-black/3 p-5 dark:bg-white/4">
+              <p className="text-lg font-medium text-(--page-fg)">
+                When not coding, you will find me exploring new tech stacks or contributing to open source. Always
+                learning, always building.
               </p>
             </div>
-            <div className="text-center">
-              <div className="bg-blue-100 dark:bg-blue-900 rounded-full w-48 h-48 mx-auto mb-4 flex items-center justify-center">
-                <span className="text-6xl">👨‍💻</span>
-              </div>
-              <p className="text-gray-600 dark:text-gray-300">Lagos, Nigeria</p>
-            </div>
           </div>
         </div>
       </section>
 
-      {/* Tech Stack */}
-      <section id="skills" className="py-20 bg-gray-50 dark:bg-gray-900 transition-colors">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-center mb-8 text-gray-900 dark:text-white">Tech Stack</h2>
+      <section id="skills" className="px-4 py-20 sm:px-6 lg:px-8">
+        <SectionHeader eyebrow="TECH STACK" title="The tools behind the finish.">
+          Technologies I use to build performant, accessible, and maintainable web apps.
+        </SectionHeader>
 
-          <p className="text-center text-gray-600 dark:text-gray-300 max-w-2xl mx-auto mb-12">Technologies I use to build performant, accessible and maintainable web apps.</p>
-
-          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-            {/* Languages */}
-            <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md transition-colors border border-gray-200 dark:border-gray-700">
-              <h3 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">Languages</h3>
-              <div className="grid grid-cols-2 gap-3">
-                <div className="flex items-center gap-3">
-                  <svg className="w-10 h-10" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" aria-hidden>
-                    <path fill="#E34F26" d="M71 460L30 0h452l-41 460-185 52" />
-                    <path fill="#EF652A" d="M256 472l150-42 35-394H256" />
-                    <path fill="#EBEBEB" d="M256 208h-59l4 45h55v-45zM256 112h-121l2 23h119v-23z" />
-                    <path fill="#fff" d="M256 344l-92-25 6-67h57v-41H160l8-92h88v-42H95l-5 57h59l-4 45H95l-5 57h166v-45z" opacity="0.9" />
-                  </svg>
-                  <div className="text-gray-900 dark:text-white">HTML</div>
-                </div>
-                <div className="flex items-center gap-3">
-                  <svg className="w-10 h-10" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" aria-hidden>
-                    <path fill="#1572B6" d="M71 460L30 0h452l-41 460-185 52" />
-                    <path fill="#33A9DC" d="M256 472l150-42 35-394H256" />
-                    <path fill="#fff" d="M162 172h188l-8 90-92 25-92-25 6-90z" />
-                  </svg>
-                  <div className="text-gray-900 dark:text-white">CSS</div>
-                </div>
-                <div className="flex items-center gap-3">
-                  <svg className="w-10 h-10" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" aria-hidden>
-                    <rect width="512" height="512" rx="60" fill="#F7DF1E" />
-                    <path d="M210 350v-120h50v120h-50zm120 0v-120h50v120h-50z" fill="#000" />
-                    <text x="50%" y="72%" textAnchor="middle" fontSize="160" fill="#000" fontWeight="700">JS</text>
-                  </svg>
-                  <div className="text-gray-900 dark:text-white">JavaScript</div>
-                </div>
-                <div className="flex items-center gap-3">
-                  <svg className="w-10 h-10" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden>
-                    <rect width="24" height="24" rx="6" fill="#3178C6" />
-                    <text x="12" y="16" textAnchor="middle" fontSize="10" fill="#fff" fontWeight="700">TS</text>
-                  </svg>
-                  <div className="text-gray-900 dark:text-white">TypeScript</div>
-                </div>
+        <div className="mx-auto grid max-w-7xl gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {skillGroups.map((group, index) => (
+            <div key={group.title} className="kinetic-card premium-hover glass-panel rounded-lg p-5 reveal-up" style={{ animationDelay: `${index * 90}ms` }}>
+              <div className="mb-7 flex items-center justify-between">
+                <h3 className="text-xl font-semibold text-(--page-fg)">{group.title}</h3>
+                <span className={`font-mono text-sm ${group.tone}`}>0{index + 1}</span>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {group.skills.map((skill) => (
+                  <span
+                    key={skill}
+                    className="rounded-lg border border-(--line) bg-white/55 px-3 py-2 text-sm text-(--page-fg) dark:bg-white/4"
+                  >
+                    {skill}
+                  </span>
+                ))}
               </div>
             </div>
-
-            {/* Frameworks / Libraries */}
-            <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md transition-colors border border-gray-200 dark:border-gray-700">
-              <h3 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">Frameworks & Libraries</h3>
-              <div className="grid grid-cols-2 gap-3">
-                <div className="flex items-center gap-3">
-                  <svg className="w-10 h-10" viewBox="0 0 841.9 595.3" xmlns="http://www.w3.org/2000/svg" aria-hidden>
-                    <g fill="#61DAFB">
-                      <path d="M420.9 296.5c0 33.7-27.3 61-61 61s-61-27.3-61-61 27.3-61 61-61 61 27.3 61 61z" />
-                    </g>
-                    <g fill="none" stroke="#61DAFB" strokeWidth="34" strokeLinecap="round" strokeLinejoin="round">
-                      <ellipse cx="420.9" cy="296.5" rx="211.6" ry="80.8" />
-                      <ellipse cx="420.9" cy="296.5" rx="211.6" ry="80.8" transform="rotate(60 420.9 296.5)" />
-                      <ellipse cx="420.9" cy="296.5" rx="211.6" ry="80.8" transform="rotate(120 420.9 296.5)" />
-                    </g>
-                  </svg>
-                  <div className="text-gray-900 dark:text-white">React</div>
-                </div>
-                <div className="flex items-center gap-3">
-                  <svg className="w-10 h-10" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden>
-                    <rect width="24" height="24" rx="6" fill="#000" />
-                    <text x="12" y="16" textAnchor="middle" fontSize="9" fill="#fff" fontWeight="700">Next</text>
-                  </svg>
-                  <div className="text-gray-900 dark:text-white">Next.js</div>
-                </div>
-                <div className="flex items-center gap-3">
-                  <svg className="w-10 h-10" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden>
-                    <path fill="#38BDF8" d="M8 24c5-8 29-14 32-6-3 8-27 14-32 6z" />
-                    <path fill="#0EA5A4" d="M8 30c6-6 26-10 32-6-6 6-26 10-32 6z" opacity="0.95" />
-                  </svg>
-                  <div className="text-gray-900 dark:text-white">Tailwind CSS</div>
-                </div>
-                <div className="flex items-center gap-3">
-                  <svg className="w-10 h-10" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg" aria-hidden>
-                    <g fill="#61DAFB">
-                      <path d="M128 112a16 16 0 1016 16 16 16 0 00-16-16z" />
-                    </g>
-                    <g fill="none" stroke="#61DAFB" strokeWidth="12" strokeLinecap="round" strokeLinejoin="round">
-                      <ellipse cx="128" cy="128" rx="80" ry="35" />
-                      <ellipse cx="128" cy="128" rx="80" ry="35" transform="rotate(60 128 128)" />
-                      <ellipse cx="128" cy="128" rx="80" ry="35" transform="rotate(120 128 128)" />
-                    </g>
-                  </svg>
-                  <div className="text-gray-900 dark:text-white">React Native</div>
-                </div>
-              </div>
-            </div>
-
-            {/* Tools */}
-            <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md transition-colors border border-gray-200 dark:border-gray-700">
-              <h3 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">Tools</h3>
-              <div className="grid grid-cols-2 gap-3">
-                <div className="flex items-center gap-3">
-                  <svg className="w-10 h-10" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden>
-                    <g>
-                      <path d="M12 3.5a2.5 2.5 0 110 5H9.5V3.5H12z" fill="#FF7262" />
-                      <path d="M9.5 3.5A2.5 2.5 0 119.5 8v-4.5z" fill="#FFA657" opacity="0.95" />
-                      <path d="M9.5 8a2.5 2.5 0 110 5H6V8h3.5z" fill="#1ABCFE" />
-                      <path d="M12 8a2.5 2.5 0 110 5 2.5 2.5 0 010-5z" fill="#A259FF" />
-                    </g>
-                  </svg>
-                  <div className="text-gray-900 dark:text-white">Figma</div>
-                </div>
-                <div className="flex items-center gap-3">
-                  <svg className="w-10 h-10 text-gray-900 dark:text-white" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden>
-                    <path fill="currentColor" d="M12 .5C5.73.5.5 5.73.5 12c0 5.08 3.29 9.38 7.86 10.9.58.11.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.7-3.88-1.54-3.88-1.54-.53-1.36-1.3-1.72-1.3-1.72-1.06-.72.08-.71.08-.71 1.17.08 1.79 1.2 1.79 1.2 1.04 1.78 2.73 1.27 3.4.97.11-.75.41-1.27.75-1.56-2.56-.29-5.26-1.28-5.26-5.7 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.47.11-3.06 0 0 .97-.31 3.18 1.18a11.07 11.07 0 012.9-.39c.98 0 1.96.13 2.88.39 2.2-1.49 3.16-1.18 3.16-1.18.63 1.59.24 2.77.12 3.06.74.81 1.19 1.83 1.19 3.09 0 4.43-2.71 5.4-5.29 5.69.42.36.8 1.08.8 2.18 0 1.58-.01 2.85-.01 3.24 0 .31.21.68.8.56C20.21 21.38 23.5 17.08 23.5 12 23.5 5.73 18.27.5 12 .5z" />
-                  </svg>
-                  <div className="text-gray-900 dark:text-white">Git / GitHub</div>
-                </div>
-                <div className="flex items-center gap-3">
-                  <svg className="w-10 h-10" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg" aria-hidden>
-                    <rect width="128" height="128" rx="20" fill="#CB3837" />
-                    <text x="64" y="86" textAnchor="middle" fontSize="64" fill="#fff" fontWeight="700">npm</text>
-                  </svg>
-                  <div className="text-gray-900 dark:text-white">npm</div>
-                </div>
-                <div className="flex items-center gap-3">
-                  <svg className="w-10 h-10 text-gray-900 dark:text-white" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" aria-hidden>
-                    <path d="M256 64L32 448h448L256 64z" fill="currentColor" />
-                  </svg>
-                  <div className="text-gray-900 dark:text-white">Vercel</div>
-                </div>
-              </div>
-            </div>
-
-            {/* Databases */}
-            <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md transition-colors border border-gray-200 dark:border-gray-700">
-              <h3 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">Databases</h3>
-              <div className="grid grid-cols-2 gap-3">
-                <div className="flex items-center gap-3">
-                  <svg className="w-10 h-10" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden>
-                    <path d="M12 2s-4 2-6 5c0 0 2 1 2 3 0 0-1 2-1 4 0 4 5 6 5 6s5-2 5-6c0-2-1-4-1-4 0-2 2-3 2-3-2-3-6-5-6-5z" fill="#47A248" />
-                  </svg>
-                  <div className="text-gray-900 dark:text-white">MongoDB</div>
-                </div>
-                <div className="flex items-center gap-3">
-                  <svg className="w-10 h-10" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg" aria-hidden>
-                    <g fill="#336791">
-                      <path d="M64 4C40 4 24 16 18 32c-3 8 0 16 6 22 4 4 7 7 7 12 0 6-6 12-6 20 0 10 10 18 26 18s26-8 26-18c0-8-6-14-6-20 0-5 3-8 7-12 6-6 9-14 6-22-6-16-22-28-46-28z"/>
-                      <path d="M34 70c2 6 8 12 18 12s16-6 18-12c-4 2-10 4-18 4s-14-2-18-4z" fill="#2B6D8E"/>
-                    </g>
-                  </svg>
-                  <div className="text-gray-900 dark:text-white">PostgreSQL</div>
-                </div>
-              </div>
-            </div>
-          </div>
+          ))}
         </div>
       </section>
 
-      {/* Services */}
-      <section id="services" className="py-20 bg-gray-50 dark:bg-gray-900 transition-colors">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-center mb-12 text-gray-900 dark:text-white">My Services</h2>
+      <section id="services" className="px-4 py-20 sm:px-6 lg:px-8">
+        <SectionHeader eyebrow="SERVICES" title="Premium execution without the noise.">
+          Clean interfaces, useful systems, and design-aware engineering for founders, teams, and operators.
+        </SectionHeader>
 
-          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-            <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md transition-colors border border-gray-200 dark:border-gray-700">
-              <h3 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">Web Development</h3>
-              <p className="text-gray-600 dark:text-gray-300">Building responsive websites with modern frameworks like React and Next.js, focusing on performance and UX.</p>
-            </div>
-
-            <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md transition-colors border border-gray-200 dark:border-gray-700">
-              <h3 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">Custom Solutions</h3>
-              <p className="text-gray-600 dark:text-gray-300">Tailor-made web apps and integrations to solve business needs and improve workflows.</p>
-            </div>
-
-            <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md transition-colors border border-gray-200 dark:border-gray-700">
-              <h3 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">UI/UX Design</h3>
-              <p className="text-gray-600 dark:text-gray-300">Designing intuitive interfaces and polished user journeys using Figma and design-first development.</p>
-            </div>
-          </div>
+        <div className="mx-auto grid max-w-7xl gap-5 lg:grid-cols-3">
+          {services.map((service, index) => (
+            <article key={service.title} className="kinetic-card premium-hover glass-panel rounded-lg p-6 reveal-up" style={{ animationDelay: `${index * 120}ms` }}>
+              <p className="font-mono text-xs text-(--accent)">0{index + 1}</p>
+              <h3 className="mt-8 text-2xl font-semibold text-(--page-fg)">{service.title}</h3>
+              <p className="mt-4 leading-7 text-(--muted-fg)">{service.description}</p>
+            </article>
+          ))}
         </div>
       </section>
 
-      {/* Contact Form Section */}
-      <section id="contact-form" className="py-20 bg-white dark:bg-gray-800 transition-colors">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-center mb-4 text-gray-900 dark:text-white">Get In Touch</h2>
-          <p className="text-center text-gray-600 dark:text-gray-300 max-w-2xl mx-auto mb-12">
-            Have a project in mind? Let's collaborate! Fill out the form below or connect with me directly.
-          </p>
+      <section id="contact-form" className="px-4 py-20 sm:px-6 lg:px-8">
+        <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[0.82fr_1.18fr]">
+          <div className="reveal-up">
+            <p className="font-mono text-xs text-(--accent)">CONTACT</p>
+            <h2 className="mt-3 text-3xl font-semibold sm:text-4xl">Have a project in mind?</h2>
+            <p className="mt-5 max-w-xl text-lg leading-8 text-(--muted-fg)">
+              Let us collaborate. Fill out the form or reach me directly through WhatsApp, email, LinkedIn, or GitHub.
+            </p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              {socials.map((social) => (
+                <a
+                  key={social.href}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="kinetic-card inline-flex items-center gap-2 rounded-lg border border-(--line) bg-white/55 px-4 py-3 text-sm font-semibold text-(--page-fg) transition hover:-translate-y-0.5 hover:border-[#0f8f83]/60 dark:bg-white/4 dark:hover:border-[#3fd4c5]/70"
+                >
+                  {social.label}
+                  <ArrowIcon />
+                </a>
+              ))}
+            </div>
+          </div>
           <ContactForm />
         </div>
       </section>
 
-      {/* Footer */}
-      <footer id="contact" className="py-12 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 border-t border-gray-200 dark:border-gray-700">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h3 className="text-2xl font-bold mb-4 text-gray-900 dark:text-gray-100">Let's Build Something Amazing</h3>
-          <p className="mb-6 text-gray-600 dark:text-gray-300">Open to collaborations, freelance, or just chatting tech.</p>
-          <div className="space-x-4 mb-8 flex justify-center items-center gap-6">
-                <a
-                  href="mailto:tfstephens2005@gmail.com"
-                  aria-label="Email"
-                  className="text-blue-300 hover:text-white dark:text-blue-300"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8m0 8a2 2 0 01-2 2H5a2 2 0 01-2-2V8" />
-                  </svg>
-                </a>
+      <footer className="footer-radiance relative overflow-hidden border-t border-(--line) px-4 py-14 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl">
+          <div className="kinetic-card glass-panel-strong rounded-lg p-6 sm:p-8 lg:p-10">
+            <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
+              <div className="max-w-2xl">
+                <div className="inline-flex items-center gap-3 rounded-full border border-[#3fd4c5]/30 bg-[#3fd4c5]/10 px-4 py-2 text-sm text-(--page-fg)">
+                  <span className="h-2 w-2 rounded-full bg-[#3fd4c5]" />
+                  Available for collaborations
+                </div>
+                <h2 className="mt-7 text-3xl font-semibold leading-tight text-(--page-fg) sm:text-4xl">
+                  Let us build something amazing.
+                </h2>
+                <p className="mt-4 text-base leading-7 text-(--muted-fg)">
+                  Open to freelance projects, product ideas, and serious teams that care about polished execution.
+                </p>
+              </div>
 
-                <a
-                  href="https://linkedin.com/in/tega-stephens-03170a291"
-                  aria-label="LinkedIn"
-                  className="text-blue-300 hover:text-white dark:text-blue-300"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-9h3v9zm-1.5-10.268c-.966 0-1.75-.8-1.75-1.782 0-.982.784-1.781 1.75-1.781s1.75.799 1.75 1.781c0 .982-.784 1.782-1.75 1.782zm13.5 10.268h-3v-4.75c0-1.133-.406-1.906-1.422-1.906-.776 0-1.238.523-1.44 1.028-.074.18-.092.43-.092.68v4.948h-3s.039-8.02 0-9h3v1.275c.397-.612 1.106-1.483 2.69-1.483 1.964 0 3.441 1.283 3.441 4.038v5.17z"/>
-                  </svg>
-                </a>
-
-                <a
-                  href="https://github.com/Stephens-Tega"
-                  aria-label="GitHub"
-                  className="text-blue-300 hover:text-white dark:text-blue-300"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 .5C5.73.5.5 5.73.5 12c0 5.08 3.29 9.38 7.86 10.9.58.11.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.7-3.88-1.54-3.88-1.54-.53-1.36-1.3-1.72-1.3-1.72-1.06-.72.08-.71.08-.71 1.17.08 1.79 1.2 1.79 1.2 1.04 1.78 2.73 1.27 3.4.97.11-.75.41-1.27.75-1.56-2.56-.29-5.26-1.28-5.26-5.7 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.47.11-3.06 0 0 .97-.31 3.18 1.18a11.07 11.07 0 012.9-.39c.98 0 1.96.13 2.88.39 2.2-1.49 3.16-1.18 3.16-1.18.63 1.59.24 2.77.12 3.06.74.81 1.19 1.83 1.19 3.09 0 4.43-2.71 5.4-5.29 5.69.42.36.8 1.08.8 2.18 0 1.58-.01 2.85-.01 3.24 0 .31.21.68.8.56C20.21 21.38 23.5 17.08 23.5 12 23.5 5.73 18.27.5 12 .5z"/>
-                  </svg>
-                </a>
+              <a
+                href={whatsappHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex shrink-0 items-center justify-center gap-2 rounded-lg bg-[#f6efe4] px-5 py-4 text-sm font-semibold text-[#15110d] shadow-xl shadow-black/20 transition hover:-translate-y-0.5 hover:bg-white dark:bg-[#f6efe4]"
+              >
+                Start a project
+                <ArrowIcon />
+              </a>
             </div>
-          <p className="text-gray-600 dark:text-gray-400">&copy; 2025 Tega Stephens. Built with Next.js 15.</p>
+          </div>
+
+          <div className="mt-6 flex flex-col gap-4 border-t border-(--line) pt-6 text-sm text-(--muted-fg) md:flex-row md:items-center md:justify-between">
+            <div className="flex flex-wrap gap-2">
+              {footerMeta.map((item) => (
+                <span key={item} className="rounded-full border border-(--line) bg-white/45 px-3 py-1.5 dark:bg-white/4">
+                  {item}
+                </span>
+              ))}
+            </div>
+            <p>&copy; 2026 Tega Stephens. Built with care.</p>
+          </div>
         </div>
       </footer>
     </main>
