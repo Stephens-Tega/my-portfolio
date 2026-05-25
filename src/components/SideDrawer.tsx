@@ -48,7 +48,7 @@ export default function SideDrawer({ links, contactHref }: SideDrawerProps) {
         aria-controls="mobile-navigation"
         aria-expanded={isOpen}
         onClick={() => setIsOpen(true)}
-        className="fixed left-4 top-[18px] z-70 inline-flex h-11 w-11 items-center justify-center rounded-full border border-(--line) bg-white/70 text-[#15110d] transition hover:-translate-y-0.5 hover:border-[#0f8f83]/60 hover:bg-white md:hidden dark:bg-[#161411]/90 dark:text-[#f6efe4] dark:hover:border-[#3fd4c5]/70"
+        className="relative z-[70] inline-flex h-11 w-11 items-center justify-center rounded-full border border-(--line) bg-white/70 text-[#15110d] transition hover:-translate-y-0.5 hover:border-[#0f8f83]/60 hover:bg-white md:hidden dark:bg-[#161411]/90 dark:text-[#f6efe4] dark:hover:border-[#3fd4c5]/70"
       >
         <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
           <path d="M4 7h16" strokeLinecap="round" />
@@ -58,7 +58,7 @@ export default function SideDrawer({ links, contactHref }: SideDrawerProps) {
       </button>
 
       <div
-        className={`fixed inset-0 z-80 bg-black/45 backdrop-blur-sm transition-opacity duration-300 md:hidden ${
+        className={`fixed inset-0 z-[80] bg-black/45 backdrop-blur-sm transition-opacity duration-300 md:hidden ${
           isOpen ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"
         }`}
         aria-hidden="true"
@@ -68,7 +68,7 @@ export default function SideDrawer({ links, contactHref }: SideDrawerProps) {
       <aside
         id="mobile-navigation"
         aria-labelledby={titleId}
-        className={`fixed left-0 top-0 z-90 flex h-dvh w-[min(88vw,390px)] flex-col border-r border-(--line) bg-[#fffaf2] px-6 py-6 shadow-2xl transition-transform duration-300 ease-out md:hidden dark:bg-[#100f0d] ${
+        className={`fixed left-0 top-0 z-[90] flex h-dvh w-[min(88vw,390px)] flex-col border-r border-(--line) bg-[#fffaf2] px-6 py-6 shadow-2xl transition-transform duration-300 ease-out md:hidden dark:bg-[#100f0d] ${
           isOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >

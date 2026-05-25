@@ -2,20 +2,23 @@
 
 import { ChangeEvent, FormEvent, useState } from "react";
 
-type FormData = {
+type ContactFormFields = {
   name: string;
   email: string;
   message: string;
 };
 
-const initialFormData: FormData = {
+const initialFormData: ContactFormFields = {
   name: "",
   email: "",
   message: "",
 };
 
+const formSubmitEmail = "tfstephens2005@gmail.com";
+const fallbackFormAction = `https://formsubmit.co/${formSubmitEmail}`;
+
 export default function ContactForm() {
-  const [formData, setFormData] = useState<FormData>(initialFormData);
+  const [formData, setFormData] = useState<ContactFormFields>(initialFormData);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitMessage, setSubmitMessage] = useState("");
   const [submitError, setSubmitError] = useState("");
@@ -35,24 +38,35 @@ export default function ContactForm() {
     setSubmitError("");
 
     try {
-      const response = await fetch("https://formsubmit.co/tfstephens2005@gmail.com", {
+      const nativeFormData = new window.FormData(event.currentTarget);
+      const honeypotValue = String(nativeFormData.get("website") ?? "");
+      const response = await fetch("/api/contact", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          website: honeypotValue,
+        }),
       });
+      const result = (await response.json().catch(() => null)) as { error?: string } | null;
 
       if (response.ok) {
-        setSubmitMessage("Message sent successfully. I will get back to you soon.");
+        setSubmitMessage(
+          "Message accepted by FormSubmit. Check Gmail for a FormSubmit email, and check spam or activation if it does not appear.",
+        );
         setFormData(initialFormData);
-        window.setTimeout(() => setSubmitMessage(""), 5000);
+        window.setTimeout(() => setSubmitMessage(""), 9000);
       } else {
-        setSubmitError("Failed to send message. Please try again.");
+        setSubmitError(
+          result?.error ??
+            "Failed to send message. If this is the first submission, check the destination inbox for the FormSubmit activation email.",
+        );
       }
     } catch (error) {
       console.error("Error submitting form:", error);
-      setSubmitError("Error sending message. Please try emailing me directly.");
+      setSubmitError("Error sending message. Please try again or email me directly at tfstephens2005@gmail.com.");
     } finally {
       setIsSubmitting(false);
     }
@@ -70,7 +84,13 @@ export default function ContactForm() {
         </p>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-5">
+      <form action={fallbackFormAction} method="POST" onSubmit={handleSubmit} className="space-y-5">
+        <input type="hidden" name="_subject" value="New portfolio enquiry for Tega Stephens" />
+        <input type="hidden" name="_template" value="table" />
+        <input type="hidden" name="_captcha" value="false" />
+        <input type="hidden" name="_replyto" value={formData.email} />
+        <input type="text" name="website" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden="true" />
+
         <div className="grid gap-5 sm:grid-cols-2">
           <label className="group block">
             <span className="mb-2 block text-sm font-medium text-(--page-fg)">Name</span>

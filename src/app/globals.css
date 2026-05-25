@@ -101,12 +101,12 @@ body.drawer-open {
 }
 
 .hero-copy-safe {
-  max-width: min(100%, 18rem);
+  max-width: min(100%, 22.5rem);
 }
 
 .hero-copy-safe h1 {
-  text-wrap: balance;
-  overflow-wrap: break-word;
+  text-wrap: normal;
+  overflow-wrap: normal;
 }
 
 .hero-copy-safe p {
@@ -115,8 +115,15 @@ body.drawer-open {
 
 @media (min-width: 640px) {
   .hero-copy-safe {
-    max-width: 48rem;
+    max-width: 52rem;
   }
+}
+
+@media (min-width: 1024px) {
+  .hero-copy-safe {
+    max-width: 76rem;
+  }
+
 }
 
 .hero-aurora::before {

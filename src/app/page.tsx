@@ -89,7 +89,7 @@ function CodeIcon() {
 
 function HeroVisual() {
   return (
-    <div className="relative mx-auto min-w-0 w-full max-w-[520px] reveal-up reveal-up-delay-2 lg:mx-0">
+    <div className="relative mx-auto min-w-0 w-full max-w-[520px] reveal-up reveal-up-delay-2 2xl:mx-0">
       <div className="hero-grid soft-pulse glass-panel-strong relative min-h-[480px] min-w-0 overflow-hidden rounded-lg p-4 sm:min-h-[520px] sm:p-5">
         <div className="scan-line pointer-events-none absolute left-0 top-0 h-24 w-full bg-linear-to-b from-[#3fd4c5]/0 via-[#3fd4c5]/14 to-[#3fd4c5]/0" />
         <div className="flex items-center justify-between border-b border-(--line) pb-4">
@@ -187,7 +187,7 @@ export default function Home() {
   return (
     <main className="premium-shell min-h-screen text-(--page-fg)">
       <header className="fixed left-0 right-0 top-0 z-50 border-b border-(--line) bg-[#f5f0e8]/80 backdrop-blur-xl dark:bg-[#080806]/78">
-        <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 pl-20 sm:px-6 sm:pl-20 md:pl-6 lg:px-8">
+        <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
           <Link href="/" className="group inline-flex min-w-0 items-center gap-3" aria-label="Tega Stephens home">
             <span className="inline-flex h-11 w-11 items-center justify-center rounded-lg border border-(--line) bg-[#15110d] text-[#f6efe4] transition group-hover:-translate-y-0.5 dark:bg-[#f6efe4] dark:text-[#15110d]">
               TS
@@ -228,14 +228,14 @@ export default function Home() {
         </div>
       </header>
 
-      <section className="hero-aurora relative overflow-hidden px-5 pb-20 pr-7 pt-32 sm:px-6 lg:px-8 lg:pb-24 lg:pt-36">
-        <div className="mx-auto grid max-w-7xl min-w-0 items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]">
-          <div className="hero-copy-safe mx-auto min-w-0 lg:mx-0">
+      <section className="hero-aurora relative overflow-hidden px-4 pb-20 pt-32 sm:px-6 lg:px-8 lg:pb-24 lg:pt-36">
+        <div className="mx-auto grid max-w-7xl min-w-0 items-center gap-12 2xl:grid-cols-[1.08fr_0.92fr]">
+          <div className="hero-copy-safe w-full min-w-0">
             <div className="reveal-up flex w-full max-w-full items-center gap-3 rounded-full border border-(--line) bg-white/60 px-4 py-2 text-sm text-(--muted-fg) dark:bg-white/4 sm:inline-flex sm:w-auto">
               <span className="h-2 w-2 shrink-0 rounded-full bg-[#3fd4c5]" />
               <span className="min-w-0 leading-6">Lagos based. Building for the web and mobile.</span>
             </div>
-            <h1 className="reveal-up reveal-up-delay-1 mt-8 text-4xl font-semibold leading-[1.04] text-(--page-fg) sm:text-6xl lg:text-7xl">
+            <h1 className="reveal-up reveal-up-delay-1 mt-8 text-4xl font-semibold leading-[1.04] text-(--page-fg) sm:text-6xl lg:text-6xl 2xl:text-7xl">
               Tega Stephens builds digital products with <span className="premium-gradient-text">premium feel.</span>
             </h1>
             <p className="reveal-up reveal-up-delay-2 mt-7 text-base leading-8 text-(--muted-fg) sm:max-w-2xl sm:text-xl">
